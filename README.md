@@ -116,11 +116,19 @@
         </p>
         </div>
         <div class="subsection">
-          <h3>Unsupervised</h3>
-          <ul>
-            <li>K-means / Hierarchical clustering for subgroup discovery.</li>
-            <li>PCA / t-SNE for visualization and feature exploration.</li>
-          </ul>
+          <h3>Heart Attack Risk Triage</h3>
+          <p>
+  <strong>Unsupervised learning methods</strong> were implemented to perform heart attack risk triage 
+  and explore latent structure within the dataset. Three clustering algorithms were applied: <strong>K-Means</strong>, <strong>Gaussian Mixture Model (GMM)</strong>, and <strong>DBSCAN (Density-Based Spatial Clustering)</strong>. 
+</p>
+
+<p>
+  An <strong>optimal cluster analysis</strong> was conducted using automated <em>k</em>-value optimization across multiple metrics to ensure stable grouping results. Comprehensive evaluation metrics, including the <em>Silhouette Score</em>, <em>Davies-Bouldin Index</em>, and <em>Calinski-Harabasz Score</em>, were used to assess clustering quality. 
+</p>
+
+<p>
+  The clustering outcomes were further examined through <strong>rich visualizations</strong>, such as PCA/t-SNE projections, radar charts, heatmaps, and cluster characteristic summaries. An <strong>interactive workflow</strong> was also developed, allowing user-guided parameter selection and visualization for each algorithm.
+</p>
         </div>
       </section>
 
