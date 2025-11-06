@@ -1,1 +1,133 @@
-# JiahuiZhang341gt.github.io
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Project Proposal: Application of Machine Learning in Heart Attack Risk Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brand:#1f4ed6;
+    --ink:#111827;
+    --muted:#6b7280;
+    --paper:#ffffff;
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --shadow:0 6px 18px rgba(17,24,39,.08);
+  }
+  html,body{height:100%;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
+    line-height:1.6; font-size:16px;
+  }
+  .wrap{max-width:980px;margin:32px auto;padding:0 18px;}
+  header{
+    background:var(--paper); border-radius:14px; box-shadow:var(--shadow);
+    padding:28px 28px 20px; margin-bottom:18px;
+  }
+  header h1{margin:0 0 6px; font-size:28px; font-weight:700; letter-spacing:.2px;}
+  header .meta{color:var(--muted); font-size:14px;}
+  .card{
+    background:var(--card); border-radius:14px; box-shadow:var(--shadow);
+    padding:26px 28px; margin:14px 0;
+  }
+  .content{counter-reset: section;}
+  .section{counter-increment: section; counter-reset: subsection;}
+  .section > h2::before{
+    content: counter(section) ". ";
+    color:var(--brand);
+  }
+  .section > h2{
+    margin:0 0 14px; font-size:22px; letter-spacing:.2px;
+    border-left:4px solid var(--brand); padding-left:10px;
+  }
+  .subsection{margin-top:14px; counter-increment: subsection;}
+  .subsection > h3::before{
+    content: counter(section) "." counter(subsection) " ";
+    color:var(--brand);
+  }
+  .subsection > h3{
+    margin:12px 0 6px; font-size:18px;
+  }
+  p{margin:8px 0;}
+  a{color:var(--brand); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  ul{margin:6px 0 10px 18px;}
+  .ref{color:var(--muted); font-size:14px;}
+  .footer{color:var(--muted); text-align:center; font-size:13px; margin:22px 0 10px;}
+  @media print{
+    body{background:#fff;}
+    header,.card{box-shadow:none;border:1px solid #e5e7eb;}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Project Midterm: Application of Machine Learning in Heart Attack Risk Analysis</h1>
+      <div class="meta">Group 14 · November 2025</div>
+    </header>
+
+    <main class="content">
+      <!-- 1. Introduction -->
+      <section class="card section">
+        <h2>Introduction</h2>
+
+        <div class="subsection">
+          <h3>Literature Review</h3>
+          
+          <p> Early research on cardiovascular risk prediction relied on population studies. The Framingham Risk Score showed that blood pressure and cholesterol categories could predict coronary heart disease. Later, the Reynolds Risk Score introduced new biomarkers. It included high-sensitivity C-reactive protein and family history. This addition improved risk classification for women.These scoring systems remain important in clinical practice. However, they rely on fixed categories and linear models. They cannot capture the complex and nonlinear interactions between many risk factors. Consequently, there is an urgent need for more accurate and interpretable prediction models.</p>
+
+          <p><strong>Supervised machine learning.</strong> extends beyond traditional regression approaches. These methods learn directly from labeled data. Support Vector Machines (SVMs) create strong classification boundaries in high-dimensional spaces. Ensemble methods, such as Random Forests and Gradient Boosting models (XGBoost, LightGBM, CatBoost), often outperform single classifiers on heart-disease datasets. These models capture nonlinear patterns and interactions between features. Neural networks, especially Convolutional Neural Networks (CNNs), were first developed for image recognition. They are now adapted to analyze ECG signals and other physiological data for cardiac prediction. </p>
+
+          <p><strong>Unsupervised methods.</strong> also assist researchers in identifying hidden patterns without using outcome labels. K-means clustering divides patient groups into subgroups that share similar characteristics. These clusters can reveal distinct cardiovascular phenotypes. Hierarchical clustering produces tree-like structures of subgroups. This approach is often highly interpretable in clinical practice. Dimensionality reduction methods, such as PCA and t-SNE, are also applied to cardiovascular data. They enable the visualization of risk profiles and uncover structure in high-dimensional features. These methods support exploratory risk stratification and provide insights that can guide feature engineering for supervised models.</p>
+        </div>
+
+        <div class="subsection">
+          <h3>Dataset Description</h3>
+          
+          <p>The dataset is taken from Kaggle’s <a href="https://www.kaggle.com/datasets/iamsouravbanerjee/heart-attack-prediction-dataset" target="_blank">Heart Attack Prediction Dataset</a>. It includes patient demographics, medical history, lifestyle factors, and socioeconomic indicators. The target variable is Heart Attack Risk, labeled as high or low risk.</p>
+        </div>
+      </section>
+
+      <!-- 2. Problem Definition -->
+      <section class="card section">
+      
+        <h2>Problem Definition</h2>
+
+        <div class="subsection">
+          <h3>Problem</h3>
+          <p>Heart attacks remain one of the leading causes of morbidity and mortality worldwide, accounting for millions of deaths each year. Despite advances in clinical diagnosis, many patients still lack timely risk assessment before symptoms appear, resulting in missed opportunities for early intervention. Traditional approaches, such as the Framingham Risk Score, rely heavily on limited clinical indicators (e.g., blood pressure, cholesterol) and physician expertise.  However, these factors are insufficient to capture the complex interactions among medical, lifestyle, and socioeconomic factors.</p>
+        </div>
+
+        <div class="subsection">
+          <h3>Motivation</h3>
+          <p>To effectively reduce the incidence and mortality of heart attacks, it is urgent to establish a data-driven prediction method that can integrate medical indicators, lifestyle factors, and socioeconomic environments to classify and predict patients’ risk of heart attacks. Machine learning provides an effective solution, as it can capture complex and nonlinear relationships among heterogeneous features. Such predictive models can support early diagnosis, enable personalized interventions, and ultimately assist healthcare providers in making informed clinical decisions.</p>
+        </div>
+      </section>
+
+      <!-- 3. (Optional) Methods -->
+      <section class="card section">
+        <h2>Methods (Preview)</h2>
+        <div class="subsection">
+          <h3>Supervised</h3>
+          <ul>
+            <li>Baselines: Logistic Regression, SVM.</li>
+            <li>Ensembles: Random Forest, XGBoost/LightGBM/CatBoost.</li>
+            <li>Calibration + SHAP for interpretability.</li>
+          </ul>
+        </div>
+        <div class="subsection">
+          <h3>Unsupervised</h3>
+          <ul>
+            <li>K-means / Hierarchical clustering for subgroup discovery.</li>
+            <li>PCA / t-SNE for visualization and feature exploration.</li>
+          </ul>
+        </div>
+      </section>
+
+      <p class="footer">© 2025 Group 14 · This page is a static site built for course presentation.</p>
+    </main>
+  </div>
+</body>
+</html>
