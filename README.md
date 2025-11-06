@@ -117,17 +117,20 @@
         </div>
         <div class="subsection">
           <h3>Heart Attack Risk Triage</h3>
-          <p>
+         <h3>Unsupervised Learning Methods</h3>
+<p>
   <strong>Unsupervised learning methods</strong> were implemented to perform heart attack risk triage 
-  and explore latent structure within the dataset. Three clustering algorithms were applied: <strong>K-Means</strong>, <strong>Gaussian Mixture Model (GMM)</strong>, and <strong>DBSCAN (Density-Based Spatial Clustering)</strong>. 
+  and uncover hidden structure within the dataset. The main objective was to identify subgroups of patients 
+  who share similar medical and lifestyle characteristics, providing a data-driven view of heart attack risk stratification.
 </p>
 
 <p>
-  An <strong>optimal cluster analysis</strong> was conducted using automated <em>k</em>-value optimization across multiple metrics to ensure stable grouping results. Comprehensive evaluation metrics, including the <em>Silhouette Score</em>, <em>Davies-Bouldin Index</em>, and <em>Calinski-Harabasz Score</em>, were used to assess clustering quality. 
-</p>
-
-<p>
-  The clustering outcomes were further examined through <strong>rich visualizations</strong>, such as PCA/t-SNE projections, radar charts, heatmaps, and cluster characteristic summaries. An <strong>interactive workflow</strong> was also developed, allowing user-guided parameter selection and visualization for each algorithm.
+  Three clustering algorithms were applied to achieve robust and diverse grouping outcomes: 
+  <strong>K-Means</strong>, <strong>Gaussian Mixture Model (GMM)</strong>, and 
+  <strong>DBSCAN (Density-Based Spatial Clustering of Applications with Noise)</strong>. 
+  These methods were selected to capture different types of data distributions — 
+  K-Means for compact spherical clusters, GMM for probabilistic soft clustering, 
+  and DBSCAN for discovering irregular shapes and outliers.
 </p>
         </div>
       </section>
