@@ -106,16 +106,14 @@
         </div>
       </section>
 
-      <!-- 3. (Optional) Methods -->
+
       <section class="card section">
-        <h2>Methods (Preview)</h2>
+        <h2>Methods</h2>
         <div class="subsection">
-          <h3>Supervised</h3>
-          <ul>
-            <li>Baselines: Logistic Regression, SVM.</li>
-            <li>Ensembles: Random Forest, XGBoost/LightGBM/CatBoost.</li>
-            <li>Calibration + SHAP for interpretability.</li>
-          </ul>
+          <h3>Data Preprocessing</h3>
+          <p>
+          <strong>Data preprocessing</strong> was automated to ensure data consistency and improve model performance. The pipeline included <strong>blood pressure feature splitting</strong>, categorical <strong>encoding</strong>, and <strong>log transformations</strong> for skewed variables. A <strong>multi-scale feature scaling</strong> strategy was applied, comparing the performance of <em>StandardScaler</em>, <em>RobustScaler</em>, and <em>MinMaxScaler</em> to enhance model stability and convergence across different algorithms.
+        </p>
         </div>
         <div class="subsection">
           <h3>Unsupervised</h3>
