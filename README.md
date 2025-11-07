@@ -59,6 +59,13 @@
     body{background:#fff;}
     header,.card{box-shadow:none;border:1px solid #e5e7eb;}
   }
+  h4 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
+}
 </style>
 </head>
 <body>
@@ -160,7 +167,7 @@
       <h2>Results and Discussion</h2>
       <div class="subsection">
       <h3>Metrics</h3>
-      
+      <h4>Unsupervised Model Metrics</h4>
       <p>
   To identify the most stable cluster configuration, an 
   <strong>optimal cluster analysis</strong> was performed using automated 
@@ -190,7 +197,7 @@
   using Silhouette, Davies–Bouldin, and Calinski–Harabasz metrics.</figcaption>
 </figure>
 
-
+<h4>Supervised Model Metrics</h4>
 <p>
   To evaluate model robustness, hyperparameter tuning experiments were conducted for both Random Forest and XGBoost classifiers. 
   Validation accuracy was tracked across different parameter configurations to identify optimal depth and estimator settings.
@@ -208,7 +215,7 @@
       </div>
       <div class="subsection">
       <h3>Results</h3>
-
+<h4>Unsupervised Model Results</h4>
 <p>
   After identifying the optimal number of clusters, we analyzed the resulting subgroup structures using multiple visualization techniques. 
   These plots help interpret the underlying relationships between medical, lifestyle, and socioeconomic factors that contribute to different heart attack risk profiles.
@@ -251,6 +258,7 @@
   <img src="figures/cluster_radar_chart_KMeans.png" alt="Radar chart cluster comparison" width="85%">
   <figcaption><strong>Figure 8.</strong> Radar chart comparison showing average feature profiles for each K-Means cluster.</figcaption>
 </figure>
+<h4>Supervised Model Results</h4>
 <p>
   The final evaluation was performed on the test set using the optimized models. 
   The confusion matrices below summarize the classification outcomes for high- and low-risk predictions. 
