@@ -272,6 +272,60 @@
 </figure>
       </div>
       </section>
+  <section class="card section">
+<h3>References</h3>
+
+<ol>
+  <li>World Health Organization. <em>Cardiovascular diseases (CVDs)</em>, 2021. 
+    <a href="https://www.who.int/news-room/fact-sheets/detail/cardiovascular-diseases-(cvds)" target="_blank">[Online]</a>
+  </li>
+
+  <li>Wilson, P. W., D’Agostino, R. B., Levy, D., Belanger, A. M., Silbershatz, H., & Kannel, W. B. 
+    <em>Prediction of coronary heart disease using risk factor categories.</em> 
+    <strong>Circulation</strong>, 97(18), 1837–1847, 1998. 
+    <a href="https://doi.org/10.1161/01.cir.97.18.1837" target="_blank">https://doi.org/10.1161/01.cir.97.18.1837</a>
+  </li>
+
+  <li>Ridker, P. M., Buring, J. E., Rifai, N., & Cook, N. R. 
+    <em>Development and validation of improved algorithms for the assessment of global cardiovascular risk in women: the Reynolds Risk Score.</em> 
+    <strong>JAMA</strong>, 297(6), 611–619, 2007. 
+    <a href="https://doi.org/10.1001/jama.297.6.611" target="_blank">https://doi.org/10.1001/jama.297.6.611</a>
+  </li>
+
+  <li>D’Agostino, R. B., Vasan, R. S., Pencina, M. J., Wolf, P. A., Cobain, M., Massaro, J. M., & Kannel, W. B. 
+    <em>General cardiovascular risk profile for use in primary care: The Framingham Heart Study.</em> 
+    <strong>Circulation</strong>, 117(6), 743–753, 2008.
+  </li>
+
+  <li>Hearst, M. A., Dumais, S. T., Osuna, E., Platt, J., & Schölkopf, B. 
+    <em>Support vector machines.</em> 
+    <strong>IEEE Intelligent Systems and Their Applications</strong>, 13(4), 18–28, 1998. 
+    <a href="https://doi.org/10.1109/5254.708428" target="_blank">https://doi.org/10.1109/5254.708428</a>
+  </li>
+
+  <li>O’Shea, K., & Nash, R. 
+    <em>An Introduction to Convolutional Neural Networks.</em> 
+    <strong>arXiv</strong>, 1511.08458, 2015. 
+    <a href="https://arxiv.org/abs/1511.08458" target="_blank">arXiv:1511.08458</a>
+  </li>
+
+  <li>Dorogush, A. V., Gulin, A., Gusev, G., Kazeev, N., Prokhorenkova, L. O., & Vorobev, A. 
+    <em>Fighting biases with dynamic boosting.</em> 
+    <strong>arXiv</strong>, 1706.09516, 2017. 
+    <a href="https://arxiv.org/abs/1706.09516" target="_blank">arXiv:1706.09516</a>
+  </li>
+
+  <li>MacQueen, J. 
+    <em>Multivariate observations.</em> 
+    In <strong>Proceedings of the 5th Berkeley Symposium on Mathematical Statistics and Probability</strong>, Vol. 1, pp. 281–297, 1967.
+  </li>
+
+  <li>e1010101. 
+    <em>Heart Attack Risk Analysis.</em> 
+    Kaggle, 2023. 
+    <a href="https://www.kaggle.com/competitions/heart-attack-risk-analysis" target="_blank">[Dataset Link]</a>
+  </li>
+</section>
       <p class="footer">© 2025 Group 14 · This page is a static site built for course presentation.</p>
     </main>
   </div>
