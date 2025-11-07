@@ -164,6 +164,8 @@
       <p>
   An <strong>optimal cluster analysis</strong> was conducted using automated <em>k</em>-value optimization across multiple metrics to ensure stable grouping results. Comprehensive evaluation metrics, including the <em>Silhouette Score</em>, <em>Davies-Bouldin Index</em>, and <em>Calinski-Harabasz Score</em>, were used to assess clustering quality. 
 </p>
+<img src="figures/optimal_k_analysis_KMeans.png" width="80%">
+<img src="clustering_evaluation_comparison.png" width="80%">
       <p>
   For the <strong>supervised learning models</strong>, multiple evaluation metrics were used to comprehensively assess prediction performance. 
   The primary metric was the <strong>Area Under the ROC Curve (AUC)</strong>, which quantifies the model’s ability to distinguish between high-risk and low-risk patients across all decision thresholds. 
