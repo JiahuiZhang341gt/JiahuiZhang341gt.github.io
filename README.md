@@ -198,12 +198,12 @@
 
 <figure style="text-align:center;">
   <img src="figures/tuning_trends_RF.png" alt="Random Forest tuning trends" width="75%">
-  <figcaption><strong>Figure 1.</strong> Validation accuracy of Random Forest across different numbers of estimators and maximum tree depths.</figcaption>
+  <figcaption><strong>Figure 3.</strong> Validation accuracy of Random Forest across different numbers of estimators and maximum tree depths.</figcaption>
 </figure>
 
 <figure style="text-align:center;">
   <img src="figures/tuning_trends_XGB.png" alt="XGBoost parameter combinations" width="85%">
-  <figcaption><strong>Figure 2.</strong> Top XGBoost parameter combinations ranked by accuracy and F1-score during hyperparameter optimization.</figcaption>
+  <figcaption><strong>Figure 4.</strong> Top XGBoost parameter combinations ranked by accuracy and F1-score during hyperparameter optimization.</figcaption>
 </figure>
       </div>
       <div class="subsection">
@@ -215,8 +215,8 @@
 </p>
 
 <figure style="text-align:center;">
-  <img src="figures/clustering_visualization.jpeg" alt="PCA and t-SNE cluster visualization" width="90%">
-  <figcaption><strong>Figure 3.</strong> PCA and t-SNE projections illustrating patient distributions across clusters for K-Means, GMM, and DBSCAN algorithms. 
+  <img src="figures/clustering_visualization.png" alt="PCA and t-SNE cluster visualization" width="90%">
+  <figcaption><strong>Figure 5.</strong> PCA and t-SNE projections illustrating patient distributions across clusters for K-Means, GMM, and DBSCAN algorithms. 
   The visualization reveals that K-Means produces clearer separation boundaries compared to other methods.</figcaption>
 </figure>
 
@@ -228,7 +228,7 @@
 
 <figure style="text-align:center;">
   <img src="figures/cluster_features_heatmap_KMeans.png" alt="Cluster feature heatmap" width="90%">
-  <figcaption><strong>Figure 4.</strong> Standardized feature averages across K-Means clusters, showing distinct profiles in behavior and medical conditions.</figcaption>
+  <figcaption><strong>Figure 6.</strong> Standardized feature averages across K-Means clusters, showing distinct profiles in behavior and medical conditions.</figcaption>
 </figure>
 
 <p>
@@ -238,7 +238,7 @@
 
 <figure style="text-align:center;">
   <img src="figures/cluster_characteristics_KMeans.png" alt="Cluster risk and sample size" width="90%">
-  <figcaption><strong>Figure 5.</strong> Distribution of heart attack risk and sample sizes across clusters for K-Means.</figcaption>
+  <figcaption><strong>Figure 7.</strong> Distribution of heart attack risk and sample sizes across clusters for K-Means.</figcaption>
 </figure>
 
 <p>
@@ -249,7 +249,7 @@
 
 <figure style="text-align:center;">
   <img src="figures/cluster_radar_chart_KMeans.png" alt="Radar chart cluster comparison" width="85%">
-  <figcaption><strong>Figure 6.</strong> Radar chart comparison showing average feature profiles for each K-Means cluster.</figcaption>
+  <figcaption><strong>Figure 8.</strong> Radar chart comparison showing average feature profiles for each K-Means cluster.</figcaption>
 </figure>
 <p>
   The final evaluation was performed on the test set using the optimized models. 
@@ -260,7 +260,7 @@
 <figure style="text-align:center;">
   <img src="figures/confusion_matrix_RF.png" alt="Random Forest confusion matrix" width="45%">
   <img src="figures/confusion_matrix_XGB.png" alt="XGBoost confusion matrix" width="45%">
-  <figcaption><strong>Figure 3.</strong> Confusion matrices for Random Forest (left) and XGBoost (right) models on the test set.</figcaption>
+  <figcaption><strong>Figure 9.</strong> Confusion matrices for Random Forest (left) and XGBoost (right) models on the test set.</figcaption>
 </figure>
       </div>
       </section>
