@@ -325,7 +325,6 @@
     Kaggle, 2023. 
     <a href="https://www.kaggle.com/competitions/heart-attack-risk-analysis" target="_blank">[Dataset Link]</a>
   </li>
-</section>
       <p class="footer">© 2025 Group 14 · This page is a static site built for course presentation.</p>
     </main>
   </div>
