@@ -208,7 +208,6 @@
       </div>
       <div class="subsection">
       <h3>Results</h3>
-      <h3>Unsupervised Results and Visualization</h3>
 
 <p>
   After identifying the optimal number of clusters, we analyzed the resulting subgroup structures using multiple visualization techniques. 
