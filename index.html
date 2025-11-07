@@ -360,6 +360,140 @@
                 </tr>
             </tbody>
           </section>
+        <div class="gantt-section">
+            <h2>Project Timeline (Gantt Chart)</h2>
+            <p style="color: #7f8c8d; font-size: 0.9em; margin-bottom: 20px;">Timeline loaded from GanttChart.xlsx</p>
+
+            <div id="gantt-container" style="overflow-x: auto;">
+                <p style="padding: 20px; color: #7f8c8d;">Loading Gantt chart...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SheetJS library for reading Excel files -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
+    <script>
+        // Convert Excel date number to readable date string
+        function excelDateToString(excelDate) {
+            if (typeof excelDate === 'string') return excelDate;
+            if (!excelDate || excelDate === '') return '';
+
+            let date;
+            if (excelDate instanceof Date) {
+                // Already a Date object
+                date = excelDate;
+            } else if (typeof excelDate === 'number') {
+                // Excel dates are days since 1900-01-01 (with a bug for Feb 29, 1900)
+                date = new Date((excelDate - 25569) * 86400 * 1000);
+            } else {
+                return String(excelDate);
+            }
+
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${month}/${day}`;
+        }
+
+        function isRowEmpty(row) {
+            return row.every(cell => !cell || cell === '');
+        }
+
+        async function loadGanttChart() {
+            try {
+                const response = await fetch('GanttChart.xlsx');
+                const arrayBuffer = await response.arrayBuffer();
+                const workbook = XLSX.read(arrayBuffer, { type: 'array', cellStyles: true });
+
+                const sheetName = 'Fall';
+                const worksheet = workbook.Sheets[sheetName];
+                const data = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+                const merges = worksheet['!merges'] || [];
+
+                let html = '<table style="width: max-content; min-width: 100%; border-collapse: collapse; background-color: white; border: 1px solid #ddd;">';
+
+                data.forEach((row, rowIndex) => {
+                    if (rowIndex === 0 || isRowEmpty(row)) return;
+
+                    html += '<tr>';
+                    row.forEach((cell, cellIndex) => {
+                        const isHeader = rowIndex <= 6;
+                        const cellRef = XLSX.utils.encode_cell({ r: rowIndex, c: cellIndex });
+                        const cellObj = worksheet[cellRef];
+
+                        let shouldSkip = false;
+                        let colspan = 1;
+                        let rowspan = 1;
+
+                        for (const merge of merges) {
+                            if (rowIndex >= merge.s.r && rowIndex <= merge.e.r &&
+                                cellIndex >= merge.s.c && cellIndex <= merge.e.c) {
+                                if (rowIndex === merge.s.r && cellIndex === merge.s.c) {
+                                    colspan = merge.e.c - merge.s.c + 1;
+                                    rowspan = merge.e.r - merge.s.r + 1;
+                                } else {
+                                    shouldSkip = true;
+                                }
+                                break;
+                            }
+                        }
+
+                        if (shouldSkip) return;
+
+                        let displayValue = cell || '';
+                        if (cell instanceof Date) {
+                            displayValue = excelDateToString(cell);
+                        } else if (typeof cell === 'number' && (cellIndex === 3 || cellIndex === 4 || cellIndex === 5)) {
+                            if (cell > 40000) {
+                                displayValue = excelDateToString(cell);
+                            } else {
+                                displayValue = cell;
+                            }
+                        }
+
+                        let bgColor = '';
+                        if (cellObj && cellObj.s && cellObj.s.fgColor) {
+                            const rgb = cellObj.s.fgColor.rgb;
+                            if (rgb) {
+                                bgColor = `#${rgb}`;
+                            }
+                        }
+
+                        let style = '';
+                        if (cellIndex === 1) {
+                            style = isHeader
+                                ? 'padding: 8px; border: 1px solid #ddd; background-color: #34495e; color: white; font-weight: bold; text-align: center; min-width: 200px; max-width: 300px; word-wrap: break-word;'
+                                : `padding: 8px; border: 1px solid #ddd; min-width: 200px; max-width: 300px; word-wrap: break-word; ${bgColor ? `background-color: ${bgColor};` : ''}`;
+                        } else if (cellIndex === 2) {
+                            style = isHeader
+                                ? 'padding: 8px; border: 1px solid #ddd; background-color: #34495e; color: white; font-weight: bold; text-align: center; min-width: 80px; max-width: 120px;'
+                                : `padding: 8px; border: 1px solid #ddd; min-width: 80px; max-width: 120px; ${bgColor ? `background-color: ${bgColor};` : ''}`;
+                        } else {
+                            style = isHeader
+                                ? 'padding: 8px; border: 1px solid #ddd; background-color: #34495e; color: white; font-weight: bold; text-align: center; min-width: 50px;'
+                                : `padding: 8px; border: 1px solid #ddd; min-width: 50px; ${bgColor ? `background-color: ${bgColor};` : ''}`;
+                        }
+
+                        const tag = isHeader ? 'th' : 'td';
+                        const colspanAttr = colspan > 1 ? ` colspan="${colspan}"` : '';
+                        const rowspanAttr = rowspan > 1 ? ` rowspan="${rowspan}"` : '';
+                        html += `<${tag} style="${style}"${colspanAttr}${rowspanAttr}>${displayValue}</${tag}>`;
+                    });
+                    html += '</tr>';
+                });
+
+                html += '</table>';
+                document.getElementById('gantt-container').innerHTML = html;
+
+            } catch (error) {
+                console.error('Error loading Gantt chart:', error);
+                document.getElementById('gantt-container').innerHTML =
+                    '<p style="color: red; padding: 20px;">Error loading chart. Make sure GanttChart.xlsx is available.</p>';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadGanttChart);
+    </script>
        <p class="footer">© 2025 Group 14 · This page is a static site built for course project midterm.</p>
     </main>
   </div>
