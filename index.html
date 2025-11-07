@@ -319,140 +319,125 @@
                 </tr>
             </tbody>
           </section>
-        <div class="gantt-section">
-            <h2>Project Timeline (Gantt Chart)</h2>
-            <p style="color: #7f8c8d; font-size: 0.9em; margin-bottom: 20px;">Timeline loaded from GanttChart.xlsx</p>
+      <!-- ======= Gantt (Starts 11/08) ======= -->
+<section id="gantt" style="margin:24px 0;">
+  <h3 style="margin:0 0 8px;">Project Timeline (starts 11/08)</h3>
+  <div class="gantt-wrap">
+    <div class="gantt-header" id="ganttHeader"></div>
+    <div class="gantt-body" id="ganttBody"></div>
+  </div>
+</section>
 
-            <div id="gantt-container" style="overflow-x: auto;">
-                <p style="padding: 20px; color: #7f8c8d;">Loading Gantt chart...</p>
-            </div>
-        </div>
-    </div>
+<style>
+  .gantt-wrap{ --cell:32px; --bar:10px; --radius:8px; font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  .gantt-header{ display:grid; grid-auto-flow:column; gap:2px; background:#f6f8fa; padding:8px; border:1px solid #e5e7eb; border-radius:10px 10px 0 0; }
+  .gantt-header .day{ width:var(--cell); text-align:center; font-size:12px; color:#475569; }
+  .gantt-body{ display:grid; grid-template-columns:220px 1fr; border:1px solid #e5e7eb; border-top:0; border-radius:0 0 10px 10px; overflow:hidden; }
+  .gantt-body .labels{ background:#ffffff; border-right:1px solid #eef2f7; }
+  .gantt-body .labels .row{ height:28px; display:flex; align-items:center; padding:0 10px; font-size:13px; color:#111827; border-bottom:1px dashed #f0f3f7; }
+  .gantt-body .grid{ position:relative; background:
+      repeating-linear-gradient(to right, #ffffff 0, #ffffff calc(var(--cell)-2px), #f3f4f6 calc(var(--cell)-2px), #f3f4f6 var(--cell));
+  }
+  .gantt-body .grid .row{ height:28px; border-bottom:1px dashed #f0f3f7; position:relative; }
+  .bar{ position:absolute; top:6px; height:var(--bar); border-radius:var(--radius); display:flex; align-items:center; }
+  .bar .tag{ position:absolute; top:-18px; left:6px; font-size:11px; color:#334155; background:#ffffffcf; padding:0 6px; border-radius:6px; }
+  .bar.green{ background:#22c55e33; border:1px solid #16a34a55; }
+  .bar.blue{ background:#3b82f633; border:1px solid #2563eb55; }
+  .bar.orange{ background:#f59e0b33; border:1px solid #d9770655; }
+  .bar.purple{ background:#a855f733; border:1px solid #7c3aed55; }
+  .bar.rose{ background:#f43f5e33; border:1px solid #e11d4855; }
+  .legend{ display:flex; gap:14px; margin-top:8px; font-size:12px; color:#475569; }
+  .legend i{ width:12px; height:12px; display:inline-block; border-radius:4px; margin-right:6px; vertical-align:-2px; }
+  .legend .g{ background:#22c55e66; border:1px solid #16a34a55;}
+  .legend .b{ background:#3b82f666; border:1px solid #2563eb55;}
+  .legend .o{ background:#f59e0b66; border:1px solid #d9770655;}
+  .legend .p{ background:#a855f766; border:1px solid #7c3aed55;}
+  .legend .r{ background:#f43f5e66; border:1px solid #e11d4855;}
+</style>
 
-    <!-- SheetJS library for reading Excel files -->
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+<!-- 任务清单（只需改这里：name / start / end / color） -->
+<ul class="tasks" style="display:none;">
+  <!-- color: green / blue / orange / purple / rose -->
+  <li data-name="Kickoff & Scope Alignment"           data-start="2025-11-08" data-end="2025-11-09" data-color="green"></li>
+  <li data-name="Data Preprocessing & EDA"             data-start="2025-11-08" data-end="2025-11-12" data-color="blue"></li>
+  <li data-name="Unsupervised Modeling (KMeans/GMM/DBSCAN)" data-start="2025-11-10" data-end="2025-11-14" data-color="orange"></li>
+  <li data-name="Unsupervised Metrics & Results"       data-start="2025-11-12" data-end="2025-11-15" data-color="orange"></li>
+  <li data-name="Supervised Modeling (RF/XGB + SMOTE)" data-start="2025-11-12" data-end="2025-11-17" data-color="purple"></li>
+  <li data-name="Supervised Tuning & Evaluation"       data-start="2025-11-15" data-end="2025-11-18" data-color="purple"></li>
+  <li data-name="Visualization (Heatmap/ROC/t-SNE etc.)" data-start="2025-11-14" data-end="2025-11-19" data-color="blue"></li>
+  <li data-name="Evaluate & Analysis (Findings)"       data-start="2025-11-17" data-end="2025-11-20" data-color="rose"></li>
+  <li data-name="Report Revision + Contribution Table" data-start="2025-11-18" data-end="2025-11-20" data-color="green"></li>
+  <li data-name="GitHub Page + Gantt Update"           data-start="2025-11-18" data-end="2025-11-20" data-color="green"></li>
+  <li data-name="Slides / Midterm Submission"          data-start="2025-11-20" data-end="2025-11-20" data-color="rose"></li>
+</ul>
 
-    <script>
-        // Convert Excel date number to readable date string
-        function excelDateToString(excelDate) {
-            if (typeof excelDate === 'string') return excelDate;
-            if (!excelDate || excelDate === '') return '';
+<script>
+(function(){
+  // === Config ===
+  const START = new Date('2025-11-08');            // 固定起始：11/08
+  const DAYS  = 13;                                 // 显示多少天（可改）
+  const cellW = 32;                                 // 单日宽度（与 CSS --cell 一致）
+  // === Build header ===
+  const header = document.getElementById('ganttHeader');
+  for(let i=0;i<DAYS;i++){
+    const d = new Date(START); d.setDate(d.getDate()+i);
+    const el = document.createElement('div');
+    el.className='day';
+    const mm = (d.getMonth()+1).toString().padStart(2,'0');
+    const dd = d.getDate().toString().padStart(2,'0');
+    el.textContent = `${mm}/${dd}`;
+    header.appendChild(el);
+  }
+  header.style.gridTemplateColumns = `repeat(${DAYS}, ${cellW}px)`;
 
-            let date;
-            if (excelDate instanceof Date) {
-                // Already a Date object
-                date = excelDate;
-            } else if (typeof excelDate === 'number') {
-                // Excel dates are days since 1900-01-01 (with a bug for Feb 29, 1900)
-                date = new Date((excelDate - 25569) * 86400 * 1000);
-            } else {
-                return String(excelDate);
-            }
+  // === Read tasks ===
+  const raw = Array.from(document.querySelectorAll('.tasks li')).map(li=>({
+    name: li.dataset.name,
+    start: new Date(li.dataset.start),
+    end:   new Date(li.dataset.end),
+    color: li.dataset.color || 'blue'
+  }));
 
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${month}/${day}`;
-        }
+  // === Build body (labels + grid rows) ===
+  const body = document.getElementById('ganttBody');
+  const labels = document.createElement('div'); labels.className='labels';
+  const grid   = document.createElement('div'); grid.className='grid';
+  body.append(labels, grid);
+  grid.style.backgroundSize = `${cellW}px 100%`;
 
-        function isRowEmpty(row) {
-            return row.every(cell => !cell || cell === '');
-        }
+  raw.forEach((t, idx)=>{
+    // label row
+    const lr = document.createElement('div'); lr.className='row';
+    lr.textContent = t.name; labels.appendChild(lr);
 
-        async function loadGanttChart() {
-            try {
-                const response = await fetch('GanttChart.xlsx');
-                const arrayBuffer = await response.arrayBuffer();
-                const workbook = XLSX.read(arrayBuffer, { type: 'array', cellStyles: true });
+    // grid row
+    const gr = document.createElement('div'); gr.className='row'; grid.appendChild(gr);
 
-                const sheetName = 'Fall';
-                const worksheet = workbook.Sheets[sheetName];
-                const data = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
-                const merges = worksheet['!merges'] || [];
+    // bar position
+    const offset = Math.max(0, Math.round((t.start-START)/86400000));
+    const span   = Math.max(1, Math.round((t.end - t.start)/86400000) + 1);
 
-                let html = '<table style="width: max-content; min-width: 100%; border-collapse: collapse; background-color: white; border: 1px solid #ddd;">';
+    const bar = document.createElement('div');
+    bar.className = `bar ${t.color}`;
+    bar.style.left = (offset*cellW + 4) + 'px';
+    bar.style.width = (span*cellW - 8) + 'px';
+    bar.innerHTML = `<span class="tag">${t.name}</span>`;
+    gr.appendChild(bar);
+  });
 
-                data.forEach((row, rowIndex) => {
-                    if (rowIndex === 0 || isRowEmpty(row)) return;
-
-                    html += '<tr>';
-                    row.forEach((cell, cellIndex) => {
-                        const isHeader = rowIndex <= 6;
-                        const cellRef = XLSX.utils.encode_cell({ r: rowIndex, c: cellIndex });
-                        const cellObj = worksheet[cellRef];
-
-                        let shouldSkip = false;
-                        let colspan = 1;
-                        let rowspan = 1;
-
-                        for (const merge of merges) {
-                            if (rowIndex >= merge.s.r && rowIndex <= merge.e.r &&
-                                cellIndex >= merge.s.c && cellIndex <= merge.e.c) {
-                                if (rowIndex === merge.s.r && cellIndex === merge.s.c) {
-                                    colspan = merge.e.c - merge.s.c + 1;
-                                    rowspan = merge.e.r - merge.s.r + 1;
-                                } else {
-                                    shouldSkip = true;
-                                }
-                                break;
-                            }
-                        }
-
-                        if (shouldSkip) return;
-
-                        let displayValue = cell || '';
-                        if (cell instanceof Date) {
-                            displayValue = excelDateToString(cell);
-                        } else if (typeof cell === 'number' && (cellIndex === 3 || cellIndex === 4 || cellIndex === 5)) {
-                            if (cell > 40000) {
-                                displayValue = excelDateToString(cell);
-                            } else {
-                                displayValue = cell;
-                            }
-                        }
-
-                        let bgColor = '';
-                        if (cellObj && cellObj.s && cellObj.s.fgColor) {
-                            const rgb = cellObj.s.fgColor.rgb;
-                            if (rgb) {
-                                bgColor = `#${rgb}`;
-                            }
-                        }
-
-                        let style = '';
-                        if (cellIndex === 1) {
-                            style = isHeader
-                                ? 'padding: 8px; border: 1px solid #ddd; background-color: #34495e; color: white; font-weight: bold; text-align: center; min-width: 200px; max-width: 300px; word-wrap: break-word;'
-                                : `padding: 8px; border: 1px solid #ddd; min-width: 200px; max-width: 300px; word-wrap: break-word; ${bgColor ? `background-color: ${bgColor};` : ''}`;
-                        } else if (cellIndex === 2) {
-                            style = isHeader
-                                ? 'padding: 8px; border: 1px solid #ddd; background-color: #34495e; color: white; font-weight: bold; text-align: center; min-width: 80px; max-width: 120px;'
-                                : `padding: 8px; border: 1px solid #ddd; min-width: 80px; max-width: 120px; ${bgColor ? `background-color: ${bgColor};` : ''}`;
-                        } else {
-                            style = isHeader
-                                ? 'padding: 8px; border: 1px solid #ddd; background-color: #34495e; color: white; font-weight: bold; text-align: center; min-width: 50px;'
-                                : `padding: 8px; border: 1px solid #ddd; min-width: 50px; ${bgColor ? `background-color: ${bgColor};` : ''}`;
-                        }
-
-                        const tag = isHeader ? 'th' : 'td';
-                        const colspanAttr = colspan > 1 ? ` colspan="${colspan}"` : '';
-                        const rowspanAttr = rowspan > 1 ? ` rowspan="${rowspan}"` : '';
-                        html += `<${tag} style="${style}"${colspanAttr}${rowspanAttr}>${displayValue}</${tag}>`;
-                    });
-                    html += '</tr>';
-                });
-
-                html += '</table>';
-                document.getElementById('gantt-container').innerHTML = html;
-
-            } catch (error) {
-                console.error('Error loading Gantt chart:', error);
-                document.getElementById('gantt-container').innerHTML =
-                    '<p style="color: red; padding: 20px;">Error loading chart. Make sure GanttChart.xlsx is available.</p>';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', loadGanttChart);
-    </script>
+  // Legend
+  const legend = document.createElement('div');
+  legend.className='legend';
+  legend.innerHTML = `
+    <span><i class="g"></i>Report / Docs</span>
+    <span><i class="b"></i>Data / Viz</span>
+    <span><i class="o"></i>Unsupervised</span>
+    <span><i class="p"></i>Supervised</span>
+    <span><i class="r"></i>Eval / Submit</span>
+  `;
+  document.getElementById('gantt').appendChild(legend);
+})();
+</script>
        <p class="footer">© 2025 Group 14 · This page is a static site built for course project midterm.</p>
     </main>
   </div>
