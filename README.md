@@ -162,10 +162,34 @@
       <h3>Metrics</h3>
       
       <p>
-  An <strong>optimal cluster analysis</strong> was conducted using automated <em>k</em>-value optimization across multiple metrics to ensure stable grouping results. Comprehensive evaluation metrics, including the <em>Silhouette Score</em>, <em>Davies-Bouldin Index</em>, and <em>Calinski-Harabasz Score</em>, were used to assess clustering quality. 
+  To identify the most stable cluster configuration, an 
+  <strong>optimal cluster analysis</strong> was performed using automated 
+  <em>k</em>-value optimization across multiple internal validation metrics. 
+  The <strong>Elbow method</strong> and the <strong>Silhouette Score</strong> curve helped determine the appropriate 
+  number of clusters for K-Means by balancing compactness and separation.
 </p>
-<img src="figures/optimal_k_analysis_KMeans.png" width="80%">
-<img src="clustering_evaluation_comparison.png" width="80%">
+
+<figure style="text-align:center;">
+  <img src="figures/optimal_k_analysis_KMeans.png" alt="Optimal K analysis" width="85%">
+  <figcaption><strong>Figure 1.</strong> Determining the optimal number of clusters for K-Means using inertia, 
+  Silhouette, Davies–Bouldin, and Calinski–Harabasz metrics.</figcaption>
+</figure>
+
+<p>
+  After selecting the optimal <em>k</em>, a comprehensive comparison was made across 
+  <strong>K-Means</strong>, <strong>GMM</strong>, and <strong>DBSCAN</strong> algorithms.  
+  Evaluation metrics such as the <em>Silhouette Score</em>, <em>Davies–Bouldin Index</em>, and 
+  <em>Calinski–Harabasz Score</em> were used to assess clustering quality from multiple perspectives.  
+  This analysis demonstrated that K-Means achieved the best balance between cohesion and separation, 
+  providing interpretable and consistent subgroup structures.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/clustering_evaluation_comparison.png" alt="Clustering algorithm comparison" width="85%">
+  <figcaption><strong>Figure 2.</strong> Comparison of clustering performance across K-Means, GMM, and DBSCAN 
+  using Silhouette, Davies–Bouldin, and Calinski–Harabasz metrics.</figcaption>
+</figure>
+
       <p>
   For the <strong>supervised learning models</strong>, multiple evaluation metrics were used to comprehensively assess prediction performance. 
   The primary metric was the <strong>Area Under the ROC Curve (AUC)</strong>, which quantifies the model’s ability to distinguish between high-risk and low-risk patients across all decision thresholds. 
