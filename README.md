@@ -190,7 +190,7 @@
   using Silhouette, Davies–Bouldin, and Calinski–Harabasz metrics.</figcaption>
 </figure>
 
-     <h3>Supervised Model Evaluation</h3>
+
 <p>
   To evaluate model robustness, hyperparameter tuning experiments were conducted for both Random Forest and XGBoost classifiers. 
   Validation accuracy was tracked across different parameter configurations to identify optimal depth and estimator settings.
@@ -204,6 +204,64 @@
 <figure style="text-align:center;">
   <img src="figures/tuning_trends_XGB.png" alt="XGBoost parameter combinations" width="85%">
   <figcaption><strong>Figure 2.</strong> Top XGBoost parameter combinations ranked by accuracy and F1-score during hyperparameter optimization.</figcaption>
+</figure>
+      </div>
+      <div class="subsection">
+      <h3>Results</h3>
+      <h3>Unsupervised Results and Visualization</h3>
+
+<p>
+  After identifying the optimal number of clusters, we analyzed the resulting subgroup structures using multiple visualization techniques. 
+  These plots help interpret the underlying relationships between medical, lifestyle, and socioeconomic factors that contribute to different heart attack risk profiles.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/clustering_visualization.jpeg" alt="PCA and t-SNE cluster visualization" width="90%">
+  <figcaption><strong>Figure 3.</strong> PCA and t-SNE projections illustrating patient distributions across clusters for K-Means, GMM, and DBSCAN algorithms. 
+  The visualization reveals that K-Means produces clearer separation boundaries compared to other methods.</figcaption>
+</figure>
+
+<p>
+  To better understand cluster characteristics, feature-level visualizations were generated. 
+  The <strong>feature heatmap</strong> below displays standardized feature means across each K-Means cluster, highlighting differences in lifestyle and clinical indicators such as 
+  <em>smoking habits</em>, <em>exercise hours</em>, and <em>blood pressure</em>.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/cluster_features_heatmap_KMeans.png" alt="Cluster feature heatmap" width="90%">
+  <figcaption><strong>Figure 4.</strong> Standardized feature averages across K-Means clusters, showing distinct profiles in behavior and medical conditions.</figcaption>
+</figure>
+
+<p>
+  We also examined the overall <strong>risk distribution</strong> and <strong>sample composition</strong> within each cluster. 
+  The following plots illustrate that each cluster maintains a balanced number of samples, while the proportion of high-risk individuals varies slightly across groups.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/cluster_characteristics_KMeans.png" alt="Cluster risk and sample size" width="90%">
+  <figcaption><strong>Figure 5.</strong> Distribution of heart attack risk and sample sizes across clusters for K-Means.</figcaption>
+</figure>
+
+<p>
+  Finally, a <strong>radar chart</strong> comparison was conducted to visualize multidimensional feature differences among clusters. 
+  The results show that certain clusters are characterized by higher stress levels, lower exercise frequency, and increased alcohol consumption, 
+  indicating different behavioral risk patterns among patients.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/cluster_radar_chart_KMeans.png" alt="Radar chart cluster comparison" width="85%">
+  <figcaption><strong>Figure 6.</strong> Radar chart comparison showing average feature profiles for each K-Means cluster.</figcaption>
+</figure>
+<p>
+  The final evaluation was performed on the test set using the optimized models. 
+  The confusion matrices below summarize the classification outcomes for high- and low-risk predictions. 
+  Both Random Forest and XGBoost achieved moderate overall accuracy, with XGBoost showing slightly better class balance.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/confusion_matrix_RF.png" alt="Random Forest confusion matrix" width="45%">
+  <img src="figures/confusion_matrix_XGB.png" alt="XGBoost confusion matrix" width="45%">
+  <figcaption><strong>Figure 3.</strong> Confusion matrices for Random Forest (left) and XGBoost (right) models on the test set.</figcaption>
 </figure>
       </div>
       </section>
