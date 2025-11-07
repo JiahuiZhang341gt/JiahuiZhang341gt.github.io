@@ -117,7 +117,6 @@
         </div>
         <div class="subsection">
           <h3>Heart Attack Risk Triage</h3>
-         <h3>Unsupervised Learning Methods</h3>
 <p>
   <strong>Unsupervised learning methods</strong> were implemented to perform heart attack risk triage 
   and uncover hidden structure within the dataset. The main objective was to identify subgroups of patients 
@@ -132,6 +131,29 @@
   K-Means for compact spherical clusters, GMM for probabilistic soft clustering, 
   and DBSCAN for discovering irregular shapes and outliers.
 </p>
+        </div>
+        <div class="subsection">
+          <h3>Heart Attack Risk Classification</h3>
+          <p>
+  <strong>Supervised learning methods</strong> were employed for heart attack risk classification. 
+  Two nonlinear ensemble models, <strong>Random Forest</strong> and <strong>XGBoost</strong>, 
+  were implemented to perform binary prediction of high- and low-risk patients.
+</p>
+
+<p>
+  Both models were chosen for their ability to capture complex nonlinear interactions 
+  between medical, demographic, and lifestyle features, which are often missed by traditional linear classifiers. 
+  Extensive feature engineering and scaling were conducted prior to model training to ensure consistency across predictors.
+</p>
+
+<p>
+  To address class imbalance in the dataset, the 
+  <strong>SMOTE</strong> (Synthetic Minority Oversampling Technique) algorithm was applied, 
+  generating synthetic samples for underrepresented classes and ensuring balanced representation 
+  between minority and majority groups. 
+  This approach enhanced model generalization and reduced bias toward the dominant class.
+</p>
+
         </div>
       </section>
 
