@@ -156,7 +156,22 @@
 
         </div>
       </section>
-
+      <section class="card section">
+      <h2>Results and Discussion</h2>
+      <div class="subsection">
+      <h3>Metrics</h3>
+      
+      <p>
+  An <strong>optimal cluster analysis</strong> was conducted using automated <em>k</em>-value optimization across multiple metrics to ensure stable grouping results. Comprehensive evaluation metrics, including the <em>Silhouette Score</em>, <em>Davies-Bouldin Index</em>, and <em>Calinski-Harabasz Score</em>, were used to assess clustering quality. 
+</p>
+      <p>
+  For the <strong>supervised learning models</strong>, multiple evaluation metrics were used to comprehensively assess prediction performance. 
+  The primary metric was the <strong>Area Under the ROC Curve (AUC)</strong>, which quantifies the model’s ability to distinguish between high-risk and low-risk patients across all decision thresholds. 
+  In addition, <em>Accuracy</em>, <em>Recall</em>, and <em>F1-Score</em> were reported to evaluate overall correctness, sensitivity to positive cases, and the balance between precision and recall. 
+  A <strong>Confusion Matrix</strong> visualization was also generated to provide insight into class-specific prediction errors and model bias after applying SMOTE balancing.
+</p>
+      </div>
+      </section>
       <p class="footer">© 2025 Group 14 · This page is a static site built for course presentation.</p>
     </main>
   </div>
