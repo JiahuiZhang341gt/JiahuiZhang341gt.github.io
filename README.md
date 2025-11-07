@@ -190,12 +190,21 @@
   using Silhouette, Davies–Bouldin, and Calinski–Harabasz metrics.</figcaption>
 </figure>
 
-      <p>
-  For the <strong>supervised learning models</strong>, multiple evaluation metrics were used to comprehensively assess prediction performance. 
-  The primary metric was the <strong>Area Under the ROC Curve (AUC)</strong>, which quantifies the model’s ability to distinguish between high-risk and low-risk patients across all decision thresholds. 
-  In addition, <em>Accuracy</em>, <em>Recall</em>, and <em>F1-Score</em> were reported to evaluate overall correctness, sensitivity to positive cases, and the balance between precision and recall. 
-  A <strong>Confusion Matrix</strong> visualization was also generated to provide insight into class-specific prediction errors and model bias after applying SMOTE balancing.
+     <h3>Supervised Model Evaluation</h3>
+<p>
+  To evaluate model robustness, hyperparameter tuning experiments were conducted for both Random Forest and XGBoost classifiers. 
+  Validation accuracy was tracked across different parameter configurations to identify optimal depth and estimator settings.
 </p>
+
+<figure style="text-align:center;">
+  <img src="figures/tuning_trends_RF.png" alt="Random Forest tuning trends" width="75%">
+  <figcaption><strong>Figure 1.</strong> Validation accuracy of Random Forest across different numbers of estimators and maximum tree depths.</figcaption>
+</figure>
+
+<figure style="text-align:center;">
+  <img src="figures/tuning_trends_XGB.png" alt="XGBoost parameter combinations" width="85%">
+  <figcaption><strong>Figure 2.</strong> Top XGBoost parameter combinations ranked by accuracy and F1-score during hyperparameter optimization.</figcaption>
+</figure>
       </div>
       </section>
       <p class="footer">© 2025 Group 14 · This page is a static site built for course presentation.</p>
