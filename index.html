@@ -341,6 +341,226 @@ Hyperparameter optimization quality for XGBoost and Random Forest was evaluated 
 </figure>
 
         
+        <h4>Cluster-Augmented Supervised Learning Results</h4>
+
+<p>
+  To evaluate whether unsupervised structure can enhance supervised prediction, we trained
+  Random Forest and XGBoost models on cluster-augmented datasets. 
+  Cluster labels from K-Means, GMM, and DBSCAN were appended as additional features, and the same
+  supervised pipeline was applied to each variant. Below we first present a detailed example
+  using the <strong>K-Means–augmented dataset with XGBoost</strong>, followed by a summary of all six models.
+</p>
+
+<h5>1. Workflow Example: K-Means + XGBoost</h5>
+
+<p>
+  We begin by examining the correlation structure of the augmented dataset. 
+  The correlation heatmap shows that most features, including the cluster label and 
+  <em>Heart_Attack_Risk</em>, have very weak linear relationships with each other. 
+  This highlights the difficulty of the prediction task and suggests that nonlinear models
+  are necessary to capture useful interactions.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/augmented_correlation_heatmap.png" alt="Correlation heatmap for KMeans-augmented dataset" width="75%">
+  <figcaption><strong>Figure 9.</strong> Correlation heatmap for the K-Means–augmented dataset, showing generally weak linear correlations between features and the target.</figcaption>
+</figure>
+
+<p>
+  Next, we visualize the data in a two-dimensional PCA space. 
+  When points are colored by the true labels, high-risk and low-risk patients are heavily overlapped,
+  confirming that the classes are not linearly separable in the reduced space.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/augmented_PCA_target.png" alt="PCA colored by true labels" width="65%">
+  <figcaption><strong>Figure 10.</strong> PCA projection colored by <em>Heart_Attack_Risk</em> labels, showing strong overlap between high-risk and low-risk patients.</figcaption>
+</figure>
+
+<p>
+  When the same PCA projection is colored by cluster labels, we observe clear regions associated
+  with different K-Means clusters. This indicates that clustering discovers meaningful latent
+  structure in the data, even though this structure does not perfectly align with the target labels.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/augmented_PCA_cluster.png" alt="PCA colored by KMeans clusters" width="65%">
+  <figcaption><strong>Figure 11.</strong> PCA projection colored by K-Means cluster assignments, showing well-separated cluster regions in the latent space.</figcaption>
+</figure>
+
+<p>
+  Hyperparameters for the K-Means + XGBoost model were tuned using grid search.
+  The heatmap below reports validation ROC-AUC for different combinations of
+  <code>max_depth</code> and <code>learning_rate</code>, with the best configuration
+  achieving an AUC of approximately 0.515.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/augmented_grid.png" alt="Grid search heatmap for XGBoost hyperparameters" width="55%">
+  <figcaption><strong>Figure 12.</strong> Grid search validation AUC for the K-Means–augmented XGBoost model across <code>max_depth</code> and <code>learning_rate</code> combinations.</figcaption>
+</figure>
+
+<h5>2. Classification Performance (K-Means + XGBoost)</h5>
+
+<p>
+  The final K-Means + XGBoost model was evaluated on a held-out test set. 
+  The table below summarizes its classification report.
+</p>
+
+<table style="margin:0 auto; border-collapse:collapse; font-size:14px;">
+  <thead>
+    <tr>
+      <th style="border:1px solid #ddd; padding:4px;">Class</th>
+      <th style="border:1px solid #ddd; padding:4px;">Precision</th>
+      <th style="border:1px solid #ddd; padding:4px;">Recall</th>
+      <th style="border:1px solid #ddd; padding:4px;">F1-score</th>
+      <th style="border:1px solid #ddd; padding:4px;">Support</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid #ddd; padding:4px;"><strong>0</strong></td>
+      <td style="border:1px solid #ddd; padding:4px;">0.65</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.93</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.76</td>
+      <td style="border:1px solid #ddd; padding:4px;">901</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ddd; padding:4px;"><strong>1</strong></td>
+      <td style="border:1px solid #ddd; padding:4px;">0.41</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.09</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.14</td>
+      <td style="border:1px solid #ddd; padding:4px;">501</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ddd; padding:4px;"><strong>Accuracy</strong></td>
+      <td style="border:1px solid #ddd; padding:4px;" colspan="3"><strong>0.63</strong></td>
+      <td style="border:1px solid #ddd; padding:4px;">1402</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ddd; padding:4px;"><strong>Macro Avg</strong></td>
+      <td style="border:1px solid #ddd; padding:4px;">0.53</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.51</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.45</td>
+      <td style="border:1px solid #ddd; padding:4px;">1402</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ddd; padding:4px;"><strong>Weighted Avg</strong></td>
+      <td style="border:1px solid #ddd; padding:4px;">0.56</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.63</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.54</td>
+      <td style="border:1px solid #ddd; padding:4px;">1402</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  The model achieves strong performance on the majority class (class&nbsp;0) but struggles
+  to correctly identify high-risk patients (class&nbsp;1), leading to low recall and
+  F1-score for the positive class.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/augmented_confusion.png" alt="Confusion matrix for KMeans + XGBoost model" width="45%">
+  <figcaption><strong>Figure 13.</strong> Confusion matrix for the K-Means–augmented XGBoost model on the test set. Most low-risk cases are predicted correctly, while many high-risk cases are misclassified as low risk.</figcaption>
+</figure>
+
+<figure style="text-align:center;">
+  <img src="figures/augmented_ROC.png" alt="ROC curve for KMeans + XGBoost model" width="45%">
+  <figcaption><strong>Figure 14.</strong> ROC curve for the K-Means–augmented XGBoost model. The curve lies close to the diagonal, with an AUC around 0.53, indicating limited ranking ability.</figcaption>
+</figure>
+
+<figure style="text-align:center;">
+  <img src="figures/augmented_PR.png" alt="Precision–Recall curve for KMeans + XGBoost model" width="45%">
+  <figcaption><strong>Figure 15.</strong> Precision–Recall curve for the K-Means–augmented XGBoost model, showing the difficulty of maintaining high precision and recall on the minority high-risk class.</figcaption>
+</figure>
+
+<p>
+  Finally, we inspect feature importances to understand how the model uses the augmented information. 
+  The <code>Cluster</code> variable appears as the second most important feature, suggesting that
+  K-Means assignments capture useful latent structure that complements the original medical
+  and lifestyle variables.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/augmented_top_features.png" alt="Top feature importances for KMeans + XGBoost" width="70%">
+  <figcaption><strong>Figure 16.</strong> Top 15 feature importances for the K-Means–augmented XGBoost model. The cluster label ranks highly, indicating that unsupervised structure contributes to the final predictions.</figcaption>
+</figure>
+
+<h5>3. Summary of All Cluster-Augmented Models</h5>
+
+<p>
+  We trained six supervised models on cluster-augmented datasets using K-Means, GMM, and DBSCAN labels.
+  The table below summarizes test accuracy, F1-score, and ROC-AUC for each model.
+</p>
+
+<table style="margin:0 auto; border-collapse:collapse; font-size:14px;">
+  <thead>
+    <tr>
+      <th style="border:1px solid #ddd; padding:4px;">Dataset</th>
+      <th style="border:1px solid #ddd; padding:4px;">Model</th>
+      <th style="border:1px solid #ddd; padding:4px;">Test&nbsp;ACC</th>
+      <th style="border:1px solid #ddd; padding:4px;">Test&nbsp;F1</th>
+      <th style="border:1px solid #ddd; padding:4px;">Test&nbsp;AUC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid #ddd; padding:4px;">KMeans</td>
+      <td style="border:1px solid #ddd; padding:4px;">RandomForest</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.636234</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.034091</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.499588</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ddd; padding:4px;">KMeans</td>
+      <td style="border:1px solid #ddd; padding:4px;">XGBoost</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.629815</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.142149</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.533038</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ddd; padding:4px;">GMM</td>
+      <td style="border:1px solid #ddd; padding:4px;">RandomForest</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.641227</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.003960</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.504390</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ddd; padding:4px;">GMM</td>
+      <td style="border:1px solid #ddd; padding:4px;">XGBoost</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.624108</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.151369</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.523867</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ddd; padding:4px;">DBSCAN</td>
+      <td style="border:1px solid #ddd; padding:4px;">RandomForest</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.642653</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.000000</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.507460</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #ddd; padding:4px;">DBSCAN</td>
+      <td style="border:1px solid #ddd; padding:4px;">XGBoost</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.619829</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.119008</td>
+      <td style="border:1px solid #ddd; padding:4px;">0.520043</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>
+  Compared to baseline supervised models trained without cluster information, cluster-augmented
+  models achieve modest but consistent improvements in overall accuracy. 
+  For Random Forest, the best configuration (<strong>GMM + Random Forest</strong>) increases accuracy
+  from 0.6027 to <strong>0.6412</strong>, an absolute gain of approximately <strong>+3.9%</strong>. 
+  For XGBoost, the best configuration (<strong>K-Means + XGBoost</strong>) raises accuracy from 0.6113 to
+  <strong>0.6298</strong>, corresponding to an absolute improvement of about <strong>+1.9%</strong>.
+  However, ROC-AUC and F1-scores for the positive class remain relatively low, indicating that 
+  class imbalance and overlapping feature distributions are still major challenges for
+  high-risk patient detection.
+</p>
       </div>
       </section>
   <section class="card section">
