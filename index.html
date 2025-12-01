@@ -169,10 +169,12 @@
             We extended the supervised pipeline by incorporating unsupervised cluster assignments as additional predictive features. Cluster labels generated from KMeans, GMM, and DBSCAN were appended to the original dataset, resulting in three augmented versions of the data.
 
 For each augmented dataset, two supervised models—Random Forest and XGBoost—were trained, producing a total of six experiments. The full workflow includes preprocessing, train/test split, model training, and hyperparameter tuning (Grid Search). 
-
-Random Forest tuning explored: n_estimators, max_depth, min_samples_split, max_features.  
+            </p>
+<p>Random Forest tuning explored: n_estimators, max_depth, min_samples_split, max_features.  </p>
+          <p>
 XGBoost tuning explored: max_depth, learning_rate, subsample, colsample_bytree, n_estimators.
-
+</p>
+<p>
 This mixed modeling strategy investigates whether latent structural information extracted from clustering can enhance downstream supervised prediction performance.
           </p>
       </section>
