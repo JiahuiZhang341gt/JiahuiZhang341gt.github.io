@@ -283,6 +283,51 @@ Hyperparameter optimization quality for XGBoost and Random Forest was evaluated 
   <img src="figures/cluster_radar_chart_KMeans.png" alt="Radar chart cluster comparison" width="85%">
   <figcaption><strong>Figure 8.</strong> Radar chart comparison showing average feature profiles for each K-Means cluster.</figcaption>
 </figure>
+
+<h5>Challenges with Density-Based Clustering (DBSCAN/HDBSCAN)</h5>
+
+<p>
+  When applying density-based clustering methods <strong>DBSCAN</strong> and <strong>HDBSCAN</strong>
+  to our dataset, we encountered significant challenges. Both methods produced highly unsatisfactory
+  clustering results in our high-dimensional heart attack risk dataset.
+</p>
+
+<figure style="text-align:center;">
+  <img src="figures/cluster_characteristics_DBSCAN.png" alt="DBSCAN cluster characteristics" width="45%">
+  <img src="figures/cluster_characteristics_HDBSCAN.png" alt="HDBSCAN cluster characteristics" width="45%">
+  <figcaption><strong>Figure 9.</strong> Cluster size distribution and noise point ratio for DBSCAN (left) and HDBSCAN (right).
+  Both methods exhibit severe imbalance, with a single dominant cluster containing over 99% of samples and noise points exceeding 30%.</figcaption>
+</figure>
+
+<p>
+  As illustrated in Figure 9, both DBSCAN and HDBSCAN produced extremely imbalanced cluster structures.
+  A single large cluster dominated the dataset, accounting for more than 99% of all samples,
+  while over 30% of data points were labeled as noise. Such outcomes indicate a failure to discover
+  meaningful subgroup structures within the patient population.
+</p>
+
+<p>
+  To diagnose this issue, we revised our feature scaling strategy. Originally, different attributes were scaled
+  using three different scaling methods based on their distributions. We replaced this multi-scale approach with
+  a unified <em>StandardScaler</em> to ensure all features were normalized consistently. Despite this change,
+  clustering performance showed no improvement, suggesting that the problem lies deeper than feature normalization.
+</p>
+
+<p>
+  The root cause of this failure is the well-known <strong>curse of dimensionality</strong> in Euclidean distance-based methods.
+  In our 22-dimensional feature space, pairwise distances between data points become increasingly similar,
+  making it nearly impossible to distinguish density variations using a fixed distance threshold (eps in DBSCAN).
+  DBSCAN relies on the assumption that meaningful clusters correspond to regions of high density separated by
+  low-density areas. This assumption breaks down in high-dimensional spaces, where distance metrics lose their discriminative power.
+</p>
+
+<p>
+  Based on these findings, we conclude that <strong>density-based clustering methods (DBSCAN and HDBSCAN) are not suitable
+  for our high-dimensional cardiovascular risk dataset</strong>. This also explains why distance-based methods like K-Means
+  and probabilistic approaches like GMM, which rely on different geometric or distributional assumptions,
+  demonstrated more stable and interpretable clustering performance in previous experiments.
+</p>
+
 <h4>Supervised Model Results</h4>
 <p>
   The final evaluation was performed on the test set using the optimized models. 
@@ -293,7 +338,7 @@ Hyperparameter optimization quality for XGBoost and Random Forest was evaluated 
 <figure style="text-align:center;">
   <img src="figures/confusion_matrix_RF.png" alt="Random Forest confusion matrix" width="45%">
   <img src="figures/confusion_matrix_XGB.png" alt="XGBoost confusion matrix" width="45%">
-  <figcaption><strong>Figure 9.</strong> Confusion matrices for Random Forest (left) and XGBoost (right) models on the test set.</figcaption>
+  <figcaption><strong>Figure 10.</strong> Confusion matrices for Random Forest (left) and XGBoost (right) models on the test set.</figcaption>
 </figure>
 
 
@@ -320,7 +365,7 @@ Hyperparameter optimization quality for XGBoost and Random Forest was evaluated 
 
 <figure style="text-align:center;">
   <img src="figures/augmented_correlation_heatmap.png" alt="Correlation heatmap for KMeans-augmented dataset" width="75%">
-  <figcaption><strong>Figure 10.</strong> Correlation heatmap for the K-Means–augmented dataset, showing generally weak linear correlations between features and the target.</figcaption>
+  <figcaption><strong>Figure 11.</strong> Correlation heatmap for the K-Means–augmented dataset, showing generally weak linear correlations between features and the target.</figcaption>
 </figure>
 
 <p>
@@ -331,7 +376,7 @@ Hyperparameter optimization quality for XGBoost and Random Forest was evaluated 
 
 <figure style="text-align:center;">
   <img src="figures/augmented_PCA_target.png" alt="PCA colored by true labels" width="65%">
-  <figcaption><strong>Figure 11.</strong> PCA projection colored by <em>Heart_Attack_Risk</em> labels, showing strong overlap between high-risk and low-risk patients.</figcaption>
+  <figcaption><strong>Figure 12.</strong> PCA projection colored by <em>Heart_Attack_Risk</em> labels, showing strong overlap between high-risk and low-risk patients.</figcaption>
 </figure>
 
 <p>
@@ -342,7 +387,7 @@ Hyperparameter optimization quality for XGBoost and Random Forest was evaluated 
 
 <figure style="text-align:center;">
   <img src="figures/augmented_PCA_cluster.png" alt="PCA colored by KMeans clusters" width="65%">
-  <figcaption><strong>Figure 12.</strong> PCA projection colored by K-Means cluster assignments, showing well-separated cluster regions in the latent space.</figcaption>
+  <figcaption><strong>Figure 13.</strong> PCA projection colored by K-Means cluster assignments, showing well-separated cluster regions in the latent space.</figcaption>
 </figure>
 
 <p>
@@ -354,7 +399,7 @@ Hyperparameter optimization quality for XGBoost and Random Forest was evaluated 
 
 <figure style="text-align:center;">
   <img src="figures/augmented_grid.png" alt="Grid search heatmap for XGBoost hyperparameters" width="55%">
-  <figcaption><strong>Figure 13.</strong> Grid search validation AUC for the K-Means–augmented XGBoost model across <code>max_depth</code> and <code>learning_rate</code> combinations.</figcaption>
+  <figcaption><strong>Figure 14.</strong> Grid search validation AUC for the K-Means–augmented XGBoost model across <code>max_depth</code> and <code>learning_rate</code> combinations.</figcaption>
 </figure>
 
 <h5>2. Classification Performance (K-Means + XGBoost)</h5>
@@ -421,17 +466,17 @@ Hyperparameter optimization quality for XGBoost and Random Forest was evaluated 
 
 <figure style="text-align:center;">
   <img src="figures/augmented_confusion.png" alt="Confusion matrix for KMeans + XGBoost model" width="45%">
-  <figcaption><strong>Figure 14.</strong> Confusion matrix for the K-Means–augmented XGBoost model on the test set. Most low-risk cases are predicted correctly, while many high-risk cases are misclassified as low risk.</figcaption>
+  <figcaption><strong>Figure 15.</strong> Confusion matrix for the K-Means–augmented XGBoost model on the test set. Most low-risk cases are predicted correctly, while many high-risk cases are misclassified as low risk.</figcaption>
 </figure>
 
 <figure style="text-align:center;">
   <img src="figures/augmented_ROC.png" alt="ROC curve for KMeans + XGBoost model" width="45%">
-  <figcaption><strong>Figure 15.</strong> ROC curve for the K-Means–augmented XGBoost model. The curve lies close to the diagonal, with an AUC around 0.53, indicating limited ranking ability.</figcaption>
+  <figcaption><strong>Figure 16.</strong> ROC curve for the K-Means–augmented XGBoost model. The curve lies close to the diagonal, with an AUC around 0.53, indicating limited ranking ability.</figcaption>
 </figure>
 
 <figure style="text-align:center;">
   <img src="figures/augmented_PR.png" alt="Precision–Recall curve for KMeans + XGBoost model" width="45%">
-  <figcaption><strong>Figure 16.</strong> Precision–Recall curve for the K-Means–augmented XGBoost model, showing the difficulty of maintaining high precision and recall on the minority high-risk class.</figcaption>
+  <figcaption><strong>Figure 17.</strong> Precision–Recall curve for the K-Means–augmented XGBoost model, showing the difficulty of maintaining high precision and recall on the minority high-risk class.</figcaption>
 </figure>
 
 <p>
@@ -443,7 +488,7 @@ Hyperparameter optimization quality for XGBoost and Random Forest was evaluated 
 
 <figure style="text-align:center;">
   <img src="figures/augmented_top_features.png" alt="Top feature importances for KMeans + XGBoost" width="70%">
-  <figcaption><strong>Figure 17.</strong> Top 15 feature importances for the K-Means–augmented XGBoost model. The cluster label ranks highly, indicating that unsupervised structure contributes to the final predictions.</figcaption>
+  <figcaption><strong>Figure 18.</strong> Top 15 feature importances for the K-Means–augmented XGBoost model. The cluster label ranks highly, indicating that unsupervised structure contributes to the final predictions.</figcaption>
 </figure>
 
 <h5>3. Summary of All Cluster-Augmented Models</h5>
